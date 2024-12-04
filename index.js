@@ -5,24 +5,24 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const userRoute = require("./routes/user");
+const jobRoute = require("./routes/job");
 dotenv.config();
 const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "try.html"));
+    res.sendFile(path.join(__dirname, "public", "try.html"));
 });
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use("/api/user", userRoute);
+app.use("/api/job", jobRoute);
 app.listen(PORT, () => {
-  console.log("Server is running on port 3000");
-  mongoose
-    .connect(process.env.MONGODB_URI)
-    .then(() => {
-      console.log("MongoDB connected");
-    })
-    .catch((err) => {
-      console.log(err);
+    console.log("Server is running on port 3000");
+    mongoose.connect(process.env.MONGODB_URI).then(() => {
+        console.log("MongoDB connected");
+    }).catch((err) => {
+        console.log(err);
     });
 });
